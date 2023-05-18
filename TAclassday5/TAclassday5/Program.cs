@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Internal;
 
 namespace TAclassday5
 {
@@ -7,11 +8,12 @@ namespace TAclassday5
     {
         static void Main(string[] args)
         {
-            // open chrome
+            // open chrome,maximize, and go to the website
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login?ReturnUrl=%2f");
-            
+
+
             // enter username in textbox
             IWebElement username = driver.FindElement(By.Id("UserName"));
             username.SendKeys("hari");
@@ -24,18 +26,62 @@ namespace TAclassday5
             IWebElement loginbutton = driver.FindElement(By.XPath("//*[@id=\"loginForm\"]/form/div[3]/input[1]"));
             loginbutton.Click();
 
-            //check user hari
+            //check if the user is hari
             IWebElement user = driver.FindElement(By.XPath("//*[@id=\"logoutForm\"]/ul/li/a"));
             if (user.Text == "Hello hari!")
             {
                 Console.WriteLine("login success");
             }
-            else { 
+            else {
                 Console.WriteLine("login failed");
             }
+            // creating new record
+            // go to administration tab
+            IWebElement admintab = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+            admintab.Click();
+
+            // select time and materials from drop down
+            IWebElement tmoption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
+            tmoption.Click();
+
+            // click on create new
+            IWebElement createnew = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+            createnew.Click();
+
+            // select typecode
+            IWebElement typecode = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
+            typecode.Click();
+            IWebElement time = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]/span/span[1]"));
+            time.Click();
+
+            // input code
+            IWebElement code = driver.FindElement(By.Id("Code"));
+            code.SendKeys("May2023");
+            // input descrption
+            IWebElement desc = driver.FindElement(By.Id("Description"));
+            desc.SendKeys("May2023");
+
+            // input pricepeerunit
+            IWebElement priceunit = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
+            priceunit.SendKeys("2023");
+            // save
+            IWebElement save = driver.FindElement(By.Id("SaveButton"));
+            save.Click();
+            Thread.Sleep(1000);
+            // check whether it is added
+            //goto last page
+            IWebElement lastpage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            lastpage.Click();
+            Thread.Sleep(1000);
+            //search for last item
+            IWebElement lastitem = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            if (lastitem.Text == "May2023")
+            { Console.WriteLine("new record added successfully"); }
+            else { Console.WriteLine("adding new record fail"); }
+
             Thread.Sleep(3000);
             driver.Quit();
 
         }
-    }
-}
+    }   } 
+      
