@@ -8,7 +8,9 @@ namespace TAclassday5
     {
         static void Main(string[] args)
         {
-            // open chrome,maximize, and go to the website
+            
+           // day5
+           // open chrome,maximize, and go to the website
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login?ReturnUrl=%2f");
@@ -35,7 +37,8 @@ namespace TAclassday5
             else {
                 Console.WriteLine("login failed");
             }
-            // creating new record
+            // day6
+            // creating new record 
             // go to administration tab
             IWebElement admintab = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
             admintab.Click();
@@ -59,7 +62,7 @@ namespace TAclassday5
             code.SendKeys("May2023");
             // input descrption
             IWebElement desc = driver.FindElement(By.Id("Description"));
-            desc.SendKeys("May2023");
+            desc.SendKeys("Day6");
 
             // input pricepeerunit
             IWebElement priceunit = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -76,10 +79,46 @@ namespace TAclassday5
             //search for last item
             IWebElement lastitem = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
             if (lastitem.Text == "May2023")
-            { Console.WriteLine("new record added successfully"); }
+            { Console.WriteLine("new record added successfully"); } 
             else { Console.WriteLine("adding new record fail"); }
 
             Thread.Sleep(3000);
+            //day6 edit and delete an item
+            // to edit the item
+            IWebElement price = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+            if (price.Text == "$2,023.00")
+            {
+                IWebElement edit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+                  edit.Click();
+                IWebElement editdesc = driver.FindElement(By.Id("Description"));
+                editdesc.Clear();
+                Thread.Sleep(1000);
+                editdesc.SendKeys("Edited");
+                Thread.Sleep(2000);
+                IWebElement saveedit = driver.FindElement(By.XPath("//*[@id=\"SaveButton\"]"));
+                saveedit.Click() ;
+                Console.WriteLine("Edited Successfully");
+                Thread.Sleep(2000);
+                lastpage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+                                  //it means that the element has become stale between the time
+                                  //it was initially located and when you try to access it again.
+                lastpage.Click();
+
+                //to delete the item.
+
+                IWebElement del = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+                del.Click();
+                Thread.Sleep(2000);
+                IAlert alert = driver.SwitchTo().Alert();   
+                Thread.Sleep(2000);
+                // Print the alert message (optional)
+                //Console.WriteLine("Alert Message: " + alert.Text);
+                //Thread.Sleep(2000);
+                alert.Accept(); //alert.dismiss(); to dismiss the message
+                Console.WriteLine("Item deleted successfully");
+            }
+            else { Console.WriteLine("Item not found"); }
+
             driver.Quit();
 
         }
