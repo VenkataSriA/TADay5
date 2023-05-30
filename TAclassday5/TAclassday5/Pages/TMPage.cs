@@ -56,8 +56,8 @@ namespace TAclassday5.Pages
         public void EditTM(IWebDriver driver)
         {
             //go to last page
-            Thread.Sleep(3000);
-            //Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]", 5);
+            //Thread.Sleep(3000);
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[1]/td[1]", 5);
             IWebElement lastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage.Click();
 
@@ -67,21 +67,18 @@ namespace TAclassday5.Pages
             edit.Click();
 
             IWebElement editdesc = driver.FindElement(By.Id("Description"));
-            editdesc.Clear();
-            Thread.Sleep(1000);
+            editdesc.Clear();            
 
-            editdesc.SendKeys("Edited");
-            Thread.Sleep(1000);
+            editdesc.SendKeys("Edited");            
 
             IWebElement save = driver.FindElement(By.Id("SaveButton"));
-            save.Click();
-            Thread.Sleep(2000);
+            save.Click();            
 
             // check for edited item            
             //Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]", 6);
             IWebElement lastPage1 = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage1.Click();            
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             IWebElement description = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
             if (description.Text == "Edited")
             {              

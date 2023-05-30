@@ -44,6 +44,25 @@ namespace TAclassday5.Utilities
 
         }
 
+        public static void WaitToBeVisible(IWebDriver driver, string locatorType, string locatorValue, int seconds)
+        {
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(seconds)); //line2
+            if (locatorType == "XPath")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath(locatorValue)));
+            }
+            if (locatorType == "Id")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id(locatorValue)));
+            }
+            if (locatorType == "CssSelector")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(locatorValue)));
+            }
+
+        }
+
 
     }
 }
