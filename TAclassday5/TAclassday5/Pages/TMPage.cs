@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V111.DOM;
-using System.Xml.Linq;
 using TAclassday5.Utilities;
 
 namespace TAclassday5.Pages
@@ -14,13 +12,13 @@ namespace TAclassday5.Pages
             // click on create new
             IWebElement createnew = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
             createnew.Click();
-            
+
             // select typecode
             IWebElement typecode = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span"));
             typecode.Click();
             IWebElement time = driver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[2]"));
             time.Click();
-            
+
             // input code
             IWebElement code = driver.FindElement(By.Id("Code"));
             code.SendKeys("May2023");
@@ -37,8 +35,8 @@ namespace TAclassday5.Pages
             IWebElement save = driver.FindElement(By.Id("SaveButton"));
             save.Click();
             Thread.Sleep(3000);
-        
-        
+
+
             //goto last page            
             IWebElement lastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage.Click();
@@ -67,24 +65,24 @@ namespace TAclassday5.Pages
             edit.Click();
 
             IWebElement editdesc = driver.FindElement(By.Id("Description"));
-            editdesc.Clear();            
+            editdesc.Clear();
 
-            editdesc.SendKeys("Edited");            
+            editdesc.SendKeys("Edited");
 
             IWebElement save = driver.FindElement(By.Id("SaveButton"));
-            save.Click();            
+            save.Click();
 
             // check for edited item            
             //Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]", 6);
             IWebElement lastPage1 = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
-            lastPage1.Click();            
+            lastPage1.Click();
             Thread.Sleep(1000);
             IWebElement description = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
             if (description.Text == "Edited")
-            {              
+            {
 
-                Console.WriteLine("Edited Successfully");                             
-                
+                Console.WriteLine("Edited Successfully");
+
             }
         }
 
@@ -98,24 +96,24 @@ namespace TAclassday5.Pages
             Thread.Sleep(2000);
             IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deleteButton.Click();
-                
+
             IAlert alert = driver.SwitchTo().Alert();
             Thread.Sleep(2000);
             alert.Accept(); //alert.dismiss(); to dismiss the message                    
             Thread.Sleep(4000);
             //Wait.WaitToExist(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[4]/td[1]", 5)
-            
+
             lastPage1.Click();
             IWebElement lastItem = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-                if (lastItem.Text == "May2023") 
-                {
-                    Console.WriteLine("Item delete unsuccessful");
-                }
-                else
-                {
-                    Console.WriteLine("Item deleted successfully");
-                }
+            if (lastItem.Text == "May2023")
+            {
+                Console.WriteLine("Item delete unsuccessful");
+            }
+            else
+            {
+                Console.WriteLine("Item deleted successfully");
+            }
 
         }
     }
